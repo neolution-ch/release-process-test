@@ -1,5 +1,5 @@
 {
-  "name": "release-process-test",
+  "name": "@neolution-ch/release-process-test",
   "packageManager": "yarn@4.6.0",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
