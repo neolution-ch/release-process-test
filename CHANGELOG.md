@@ -1,4 +1,4 @@
-﻿# Changelog
+# Changelog
 
 All notable changes to this project will be documented in this file.
 
@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2025-06-03
+
 ### Added
 
 - initial release :tada:
+
+[unreleased]: https://github.com/neolution-ch/release-process-test/compare/0.2.0...HEAD
+[0.2.0]: https://github.com/neolution-ch/release-process-test/releases/tag/0.2.0
