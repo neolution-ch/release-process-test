@@ -18,7 +18,7 @@ To achieve the requirements we use the following tools:
 - [semantic versioning](https://semver.org/)
 - [keep-a-changelog](https://keepachangelog.com/)
 - [release-it](https://github.com/release-it/release-it)
-- [release-it/keep-a-changelog](https://github.com/release-it/keep-a-changelog])
+- [release-it/keep-a-changelog](https://github.com/release-it/keep-a-changelog)
 
 ## GitHub Actions
 
@@ -26,7 +26,7 @@ To release a new version of a package we use a single GitHub action that is trig
 It will have two inputs:
 
 - version: major, minor, patch
-- release-type: stable, rc, alpha, beta, no-version-update
+- release-type: stable, rc, alpha, beta, increment-prerelease
 
 This ensures that we can release a new version of a package with a single click.
 
@@ -92,6 +92,8 @@ This is the case where you want to release only parts of the `Unreleased` sectio
 - The GitHub action will automatically update the `package.json` version, create a new tag, update the `CHANGELOG.md` file and push everything into the `release/1.2.4` branch.
 
 - After the release is done, the GitHub action will merge the `release/1.2.4` branch into the `main` branch.
+    - This should only update the `CHANGELOG.md` file and the `package.json` version, not the code itself.
+    - Since this is the new latest stable release, it's safe to merge it into the `main` branch.
 
 ### Pre-Release: Partial Unreleased
 
@@ -104,6 +106,10 @@ This is the case where you want to release only parts of the `Unreleased` sectio
 
 - Run the GitHub action with major, minor or patch and rc, alpha or beta as release-type from the `pre-release/1.2.4` branch you created **(not the main branch)**.
 
+- Once you are done with the pre-release, continue with the stables release process as described above—either [Stable Release: Full Unreleased](#stable-release-full-unreleased) or [Stable Release: Partial Unreleased](#stable-release-partial-unreleased).
+
+- :warning: **Do not add anything manually to the `pre-release/1.2.4` branch, only cherry-pick commits from the `main` branch. This will ensure that the code was checked by our CI pipeline and is in a releasable state. If you want to make changes, create a PR into `main` and then cherry-pick the commits into the `pre-release/1.2.4` branch. You can then run the GitHub action with the `release-type` set to `increment-prerelease` to increment the pre-release version. For example from `1.2.4-alpha.0` to `1.2.4-alpha.1`.**
+
 ### Pre-Release: Full Unreleased
 
 This is the case where you want to release everything in the `Unreleased` section as a pre-release. This is useful if you have multiple features or fixes in the `Unreleased` section and want to test them before releasing them as a stable release.
@@ -112,6 +118,10 @@ This is the case where you want to release everything in the `Unreleased` sectio
   `git checkout -b pre-release/1.2.4 main`
 
 - Run the GitHub action with major, minor or patch and rc, alpha or beta as release-type from the `pre-release/1.2.4` branch you created **(not the main branch)**.
+
+- Once you are done with the pre-release, continue with the stables release process as described above—either [Stable Release: Full Unreleased](#stable-release-full-unreleased) or [Stable Release: Partial Unreleased](#stable-release-partial-unreleased).
+
+- :warning: **Do not add anything manually to the `pre-release/1.2.4` branch, only cherry-pick commits from the `main` branch. This will ensure that the code was checked by our CI pipeline and is in a releasable state. If you want to make changes, create a PR into `main` and then cherry-pick the commits into the `pre-release/1.2.4` branch. You can then run the GitHub action with the `release-type` set to `increment-prerelease` to increment the pre-release version. For example from `1.2.4-alpha.0` to `1.2.4-alpha.1`.**
 
 ### Supporting old versions / intermediate releases
 
@@ -123,3 +133,5 @@ This is the case where you want to support old versions of a package or create a
 - Either cherry-pick the commits you want to release from the `main` branch into your `release/1.2.4` branch or apply the changes manually.
 
 - Run the GitHub action with major, minor or patch and stable as release-type from the `release/1.2.4` branch you created **(not the main branch)**.
+
+- After the release is done, the GitHub action will update the `CHANGELOG.md` file on the main branch and add the new version to the `CHANGELOG.md` file.
