@@ -86,6 +86,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
 
-      - name: publish to github packages
-        if: ${{ github.event.inputs.dry_run != 'true' }}
-        run: npm publish --registry=https://npm.pkg.github.com/
