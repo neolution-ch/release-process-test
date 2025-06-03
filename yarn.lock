@@ -230,6 +230,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@neolution-ch/release-process-test@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@neolution-ch/release-process-test@workspace:."
+  dependencies:
+    "@release-it/keep-a-changelog": "npm:^7.0.0"
+    prettier: "npm:^3.5.3"
+    release-it: "npm:^19.0.3"
+  languageName: unknown
+  linkType: soft
+
 "@nodeutils/defaults-deep@npm:1.1.0":
   version: 1.1.0
   resolution: "@nodeutils/defaults-deep@npm:1.1.0"
@@ -1484,16 +1494,6 @@ __metadata:
   checksum: 10c0/11d73bffb7cda05e7446e465ff2538ba420debeaf222baa38bc4e7b958d5406056b02f506adb99226fe667adbe84efe52fa6754aa96c1d2d6aabde93e7f145bd
   languageName: node
   linkType: hard
-
-"release-process-test@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "release-process-test@workspace:."
-  dependencies:
-    "@release-it/keep-a-changelog": "npm:^7.0.0"
-    prettier: "npm:^3.5.3"
-    release-it: "npm:^19.0.3"
-  languageName: unknown
-  linkType: soft
 
 "restore-cursor@npm:^5.0.0":
   version: 5.1.0
