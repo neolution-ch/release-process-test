@@ -53,6 +53,7 @@ jobs:
 
       - name: install yarn packages
         run: |
+          corepack enable
           yarn --frozen-lockfile
 
       - name: set NPM Token
