@@ -28,7 +28,7 @@ on:
 
 jobs:
     call-workflow-in-another-repo:
-      uses: neolution-ch/neolution-reusable-workflows/.github/workflows/release-it-yarn-npm.yml@1d4b9a1364fb86a59e50d12d9038a19ff52d39b0
+      uses: neolution-ch/neolution-reusable-workflows/.github/workflows/release-it-yarn-npm.yml@ccb7b791799991259f7693781fec99136e0c5849
       with:
         dry-run: ${{ github.event.inputs.dry_run == 'true' }}
         version-type: ${{ github.event.inputs.version_type }}
