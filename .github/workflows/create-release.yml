@@ -35,6 +35,6 @@ jobs:
         pre-release-channel: ${{ github.event.inputs.pre_release }}
       secrets:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        npm-token: ${{ secrets.NPM_TOKEN_NEOLUTION }}
+        npm-token: "dry run does not require npm token"
         release-bot-app-id: ${{ secrets.RELEASE_BOT_APP_ID }}
         release-bot-app-private-key: ${{ secrets.RELEASE_BOT_APP_PRIVATE_KEY }}
