@@ -27,62 +27,14 @@ on:
         default: false
 
 jobs:
-  release-it:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      packages: write
-    steps:
-      - uses: tibdex/github-app-token@v1
-        id: generate-token
-        with:
-          app_id: ${{ secrets.RELEASE_BOT_APP_ID }}
-          private_key: ${{ secrets.RELEASE_BOT_APP_PRIVATE_KEY }}
-
-      - name: checkout
-        uses: actions/checkout@v3
-        with:
-          token: ${{ steps.generate-token.outputs.token }}
-          # we need everything so release-it can compare the current version with the latest tag
-          fetch-depth: 0
-
-      - name: initialize mandatory git config
-        run: |
-          git config user.name "GitHub Release Bot"
-          git config user.email release-bot@neolution.ch
-
-      - name: install yarn packages
-        run: |
-          corepack enable
-          yarn --frozen-lockfile
-
-      - name: set NPM Token
-        run: |
-          echo "//npm.pkg.github.com/:_authToken=$GITHUB_TOKEN" >> .npmrc
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: run release-it
-        run: |
-          params=()
-
-          if [[ ${{ github.event.inputs.version_type }} != "revision" ]]; then
-              params+=(${{ github.event.inputs.version_type }})
-          fi
-
-          if [[ ${{ github.event.inputs.pre_release }} != "stable" ]]; then
-              params+=(--preRelease=${{ github.event.inputs.pre_release }})
-              params+=(--plugins.@release-it/keep-a-changelog.keepUnreleased)
-              params+=(--no-plugins.@release-it/keep-a-changelog.strictLatest)
-          fi
-
-          if [[ ${{ github.event.inputs.dry_run }} == "true" ]]; then
-              params+=(--dry-run)
-          fi
-
-          params+=(--ci)
-
-          yarn release-it "${params[@]}"
-        env:
-          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
-
+    call-workflow-in-another-repo:
+      uses: neolution-ch/neolution-reusable-workflows/.github/workflows/release-it-yarn-npm.yml@1d4b9a1364fb86a59e50d12d9038a19ff52d39b0
+      with:
+        dry-run: ${{ github.event.inputs.dry_run }}
+        version-type: ${{ github.event.inputs.version_type }}
+        pre-release-channel: ${{ github.event.inputs.pre_release }}
+      secrets:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        npm-token: ${{ secrets.NPM_TOKEN_NEOLUTION }}
+        release-bot-app-id: ${{ secrets.RELEASE_BOT_APP_ID }}
+        release-bot-app-private-key: ${{ secrets.RELEASE_BOT_APP_PRIVATE_KEY }}
